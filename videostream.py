@@ -25,19 +25,20 @@ cv2.waitKey(5)
 
 
 while True:
-
+    print 'looped'
     ret, frame = cap.read()
     img = frame
-    cv2.imshow('full',img)
-    resized_image = cv2.resize(img, (10, 10)) 
-    cv2.imshow('small',resized_image)
+    #cv2.imshow('full',img)
+    resized_img = cv2.resize(img, (80, 60)) 
+    cv2.imshow('small',resized_img)
     cv2.waitKey(5)
+    #image2 = (resized_image.reshape(0,1))
+    #print len(resized_image)
+    resized_img = resized_img.tostring()
 
-    print len(resized_image)
+    send.sendto(resized_img, (IP, PORT))
 
-    #send.sendto(pickle.dumps(resized_image), (IP, PORT))
-
-    time.sleep(.1)
+    time.sleep(.01)
 
     '''
     # Convert RGB to HSV

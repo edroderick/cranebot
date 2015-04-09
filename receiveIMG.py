@@ -6,7 +6,7 @@ import time
 import cv2.cv as cv
 import cv2
 import numpy as np
-
+import pickle
 
 #UDP_IP_IN = "192.168.1.245"
 IP = "127.0.0.1"
@@ -17,9 +17,11 @@ receive.bind((IP, PORT))
 
 
 while True:
-	data,addr = receive.recvfrom(4096)
-	L = pickle.loads(data)
-	L = frame
-
-	cv2.imshow('received',frame)
-	time.sleep(.1)
+	data,addr = receive.recvfrom(10000000)
+	print 'got past read'
+	#L = pickle.loads(data)
+	frame = np.fromstring(data, dtype=np.uint8)
+	frame2 = np.reshape(frame, (80,60,3))
+	frame3 = cv2.resize(frame2,(320,640))
+	cv2.imshow('received',frame3)
+	time.sleep(.01)
