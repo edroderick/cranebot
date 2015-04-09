@@ -25,16 +25,17 @@ void setup() {
   Dxl.begin(3);
   Dxl.wheelMode(1);
   Dxl.wheelMode(2);
+  Dxl.wheelMode(3);
+  Dxl.wheelMode(4);
 }
 
 
 void loop() {
-  while(SerialUSB.available() == 0){}  //block until serial available
-  if(SerialUSB.available() > 0){
+  if(Serial3.available() > 0){
     char inData[20];
-    while(SerialUSB.available()>0){
+    while(Serial3.available()>0){
       if(index < 19){
-        inChar = SerialUSB.read(); //read a character
+        inChar = Serial3.read(); //read a character
         inData[index] = inChar;
         index++;
         inData[index] = '\0';
@@ -50,31 +51,31 @@ void loop() {
   }
   //back
   if(inData[0] == char(66)){
-    Dxl.goalSpeed(2, maxspeed | 0x400);
+    Dxl.goalSpeed(2, maxspeed);
   }
   //left
   if(inData[0] == char(76)){
-    Dxl.goalSpeed(1, maxspeed | 0x400);
+    Dxl.goalSpeed(1, maxspeed/2 | 0x400);
   }
   //right
   if(inData[0] == char(82)){
-    Dxl.goalSpeed(1, maxspeed);
+    Dxl.goalSpeed(1, maxspeed/2);
   }
   //up
   if(inData[0] == char(85)){
-    Dxl.goalSpeed(3, maxspeed);
+    Dxl.goalSpeed(3, maxspeed/4 | 0x400);
   }
   //down
   if(inData[0] == char(68)){
-    Dxl.goalSpeed(3, maxspeed | 0x400);
+    Dxl.goalSpeed(3, maxspeed/4);
   }
   //close claw
   if(inData[0] == char(67)){
-    Dxl.goalSpeed(4, maxspeed);
+    Dxl.goalSpeed(4, maxspeed/4 | 0x400);
   }
   //open claw
   if(inData[0] == char(79)){
-    Dxl.goalSpeed(4,maxspeed | 0x400);
+    Dxl.goalSpeed(4,maxspeed/4);
   }
   //stop
   if(inData[0] == char(83)){
