@@ -2,14 +2,14 @@ import socket
 import time
 import serial
 
-#UDP_IP_IN = "192.168.1.245"
-UDP_IP_IN = "127.0.0.1"
+UDP_IP_IN = "192.168.1.245"
+#UDP_IP_IN = "127.0.0.1"
 #UDP_IP_OUT = "192.168.1.245"
 UDP_PORT_IN = 5005
 #UDP_PORT_OUT = 5006
 
-#ser = serial.Serial('/dev/ttyAMA0', 9600)	#RPI hardware serial
-ser = serial.Serial('/dev/ttyACM0', 38400)	#USB
+ser = serial.Serial('/dev/ttyAMA0', 57600)	#RPI hardware serial
+#ser = serial.Serial('/dev/ttyACM0', 38400)	#USB
 
 sock_in = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP from Control CPU
 sock_in.bind((UDP_IP_IN, UDP_PORT_IN))
@@ -51,6 +51,8 @@ while True:
 	elif (data == "C"):
 		msg = chr(67)
 		#value = chr(stepsize)
+	elif (data == "S"):
+		msg = chr(83)
 	
 	if (msg != 0):
 		packet = msg #+ value
