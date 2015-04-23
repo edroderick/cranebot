@@ -11,8 +11,8 @@ import pygame
 import socket
 import math
 
-#UDP_IP = "192.168.1.245"
-UDP_IP = "127.0.0.1"
+UDP_IP = "192.168.1.245"
+#UDP_IP = "127.0.0.1"
 UDP_PORT = 5005
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
  
@@ -35,7 +35,6 @@ x_coord = 10
 y_coord = 10
 
 maxi = 32768.0
-lastmessage = '0'
  
 # Count the joysticks the computer has
 joystick_count = pygame.joystick.get_count()
@@ -70,29 +69,32 @@ while not done:
          # my_joystick.get_button(i)
 
 
-	if (jl01 < 0):
-		MESSAGE = 'F' + str(abs(jl01))
+	if (jl01 < 
+		MESSAGE1 = 'F' + str(val)
 	elif (jl01 > 0):
-		MESSAGE = 'B'+ str(abs(jl01))
+		MESSAGE1 = 'B'
 	elif (jl00 < 0):
-		MESSAGE = 'L'+ str(abs(jl00))
+		MESSAGE1 = 'L'
 	elif (jl00 > 0):
-		MESSAGE = 'R'+ str(abs(jl00))
+		MESSAGE1 = 'R'
 	elif (jl11 > 0):
-		MESSAGE = 'U'+ str(abs(jl11))
+		MESSAGE1 = 'U'
 	elif (jl11 < 0):
-		MESSAGE = 'D'+ str(abs(jl11))
+		MESSAGE1 = 'D'
 	elif (my_joystick.get_button(4) == 1):
-		MESSAGE = 'O'+ '1'
+		MESSAGE1 = 'O'
 	elif (my_joystick.get_button(6) == 1):
-		MESSAGE = 'C'+ '1'
+		MESSAGE1 = 'C'
 	else:
-		MESSAGE = 'S' 
+		MESSAGE1 = 'S' 
 	
-	if (lastmessage != MESSAGE):
-		sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
+	print MESSAGE1
 
-	lastmessage = MESSAGE
+	#print 'kl00= ', jl00
+	#print 'jl01= ', jl01
+	#print 'jl10= ', jl10
+	#print 'jl11= ', jl11	
+
 
     # ALL GAME LOGIC SHOULD GO ABOVE THIS COMMENT
  
