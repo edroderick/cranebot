@@ -16,6 +16,7 @@ Dynamixel Dxl(DXL_BUS_SERIAL1);
 char inChar;
 byte index = 0;
 int maxspeed = 400;
+double inspeed;
 
 
 void setup() {
@@ -26,7 +27,7 @@ void setup() {
   Dxl.wheelMode(1);
   Dxl.wheelMode(2);
   Dxl.wheelMode(3);
-  Dxl.wheelMode(4);
+  Dxl.jointMode(4);
 }
 
 
@@ -43,7 +44,10 @@ void loop() {
     }
   
   index = 0;
-  SerialUSB.print(inData[0]);
+  
+  inspeed = (double)inData[1]/255.0;
+  
+  SerialUSB.print(inspeed);
   
   //forward
   if(inData[0] == char(70)){

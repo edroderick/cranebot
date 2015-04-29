@@ -24,22 +24,22 @@ while True:
 
 	if (data[0] == "F"):
 		msg = chr(70)
-		value = chr(0b10000000|int(float(data[1:])*127))
+		value = chr(int(float(data[1:])*255))
 	elif (data[0] == "B"):
 		msg = chr(66)
-		value = chr(0b00000000|int(float(data[1:])*127))
+		value = chr(int(float(data[1:])*255))
 	elif (data[0] == "L"):
 		msg = chr(76)
-		value = chr(0b10000000|int(float(data[1:])*127))
+		value = chr(int(float(data[1:])*255))
 	elif (data[0] == "R"):
 		msg = chr(82)
-		value = chr(0b00000000|int(float(data[1:])*127))
+		value = chr(int(float(data[1:])*255))
 	elif (data[0] == "U"):
 		msg = chr(85)
-		value = chr(0b10000000|int(float(data[1:])*127))
+		value = chr(int(float(data[1:])*255))
 	elif (data[0] == "D"):
 		msg = chr(68)
-		value = chr(0b00000000|int(float(data[1:])*127))
+		value = chr(int(float(data[1:])*255))
 	elif (data[0] == "O"):
 		msg = chr(79)
 		value = chr(255)
