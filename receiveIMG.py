@@ -11,7 +11,8 @@ import os
 import StringIO
 
 #UDP_IP_IN = "192.168.1.245"
-IP = "127.0.0.1"
+#IP = "127.0.0.1"
+IP = "192.168.1.100"
 PORT = 5010
 
 receive = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # UDP from process over lan

@@ -17,7 +17,7 @@ char inChar;
 byte index = 0;
 double maxspeed = 400.0;
 double inspeed;
-int clawangle = 512;
+int clawangle = 575;
 int maxclaw = 1023;
 int minclaw = 250;
 
@@ -27,10 +27,11 @@ void setup() {
   pinMode(BOARD_LED_PIN, OUTPUT);
   Serial3.begin(9600);
   Dxl.begin(3);
-  Dxl.wheelMode(1);
-  Dxl.wheelMode(2);
-  Dxl.wheelMode(3);
-  Dxl.jointMode(4);
+  Dxl.wheelMode(1); //left wheel
+  Dxl.wheelMode(2); //right wheel
+  Dxl.jointMode(3); //left claw
+  Dxl.jointMode(4); //right claw
+  Dxl.goalPosition(3,clawangle);
   Dxl.goalPosition(4,clawangle);
 }
 
@@ -55,29 +56,26 @@ void loop() {
   
   //forward
   if(inData[0] == char(70)){
-    Dxl.goalSpeed(2, int(inspeed) | 0x400); 
+    Dxl.goalSpeed(1, int(inspeed)); 
+    Dxl.goalSpeed(3, int(inspeed) | 0x400);
   }
   //back
   if(inData[0] == char(66)){
-    Dxl.goalSpeed(2, int(inspeed));
+    Dxl.goalSpeed(3, int(inspeed));
+    Dxl.goalSpeed(1, int(inspeed) | 0x400);
   }
   //left
   if(inData[0] == char(76)){
     Dxl.goalSpeed(1, int(inspeed)/2 | 0x400);
+    Dxl.goalSpeed(3, int(inspeed)/2 | 0x400);
   }
   //right
   if(inData[0] == char(82)){
+    Dxl.goalSpeed(3, int(inspeed)/2);
     Dxl.goalSpeed(1, int(inspeed)/2);
   }
-  //up
-  if(inData[0] == char(85)){
-    Dxl.goalSpeed(3, int(inspeed)/4 | 0x400);
-  }
-  //down
-  if(inData[0] == char(68)){
-    Dxl.goalSpeed(3, int(inspeed)/4);
-  }
-  //close claw
+  
+ //close claw
   if(inData[0] == char(67)){
     if (clawangle > minclaw){
         clawangle = clawangle - 15;
@@ -85,7 +83,7 @@ void loop() {
     else{
         clawangle = minclaw;
     }
-    Dxl.goalPosition(4,clawangle);
+    Dxl.goalPosition(2,clawangle);
   }
   //open claw
   if(inData[0] == char(79)){
@@ -95,17 +93,17 @@ void loop() {
     else{
         clawangle = maxclaw;
     }
-    Dxl.goalPosition(4,clawangle);
+    Dxl.goalPosition(2,clawangle);
   }
   //stop
   if(inData[0] == char(83)){
     Dxl.goalSpeed(1, 0);
-    Dxl.goalSpeed(2, 0);
     Dxl.goalSpeed(3, 0);
-    //Dxl.goalSpeed(4, 0);
   }
+
   delay(10);
 }
 }
 
-
+//leftwheel 1
+//righwheel 3

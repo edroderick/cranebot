@@ -9,7 +9,7 @@ import sys
 if __name__ == "__main__":
 ## ---------- UDP Start ---------------
       UDP_IP = "192.168.1.100"
-      UDP_PORT = 5010
+      UDP_PORT = 5011
 #      MESSAGE = "Hello, World!"
       sock = socket.socket(socket.AF_INET, # Internet
                            socket.SOCK_DGRAM) # UDP
@@ -29,7 +29,7 @@ if __name__ == "__main__":
         #print sys.getsizeof(frame)
         rm = np.reshape(nparr,(60,80,3))
         rrm = cv2.resize(rm,(320,240))
-        cv2.imshow('crane',rrm)
+        cv2.imshow('car',rrm)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
 	   ipCam.close()

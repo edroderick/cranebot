@@ -8,23 +8,20 @@
 # http://simpson.edu/computer-science/
  
 import pygame
-import ach
-import joystruct as jy
+import socket
+import math
 
-JOY_CHAN='joy-chan'
-r = ach.Channel(JOY_CHAN)
-r.flush()
-
-ref = jy.JOYSTICK_REF()
-
+UDP_IP = "192.168.1.212"
+#UDP_IP = "127.0.0.1"
+UDP_PORT = 5006
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
  
 # Define some colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
- 
- 
+  
 pygame.init()
  
 # Loop until the user clicks the close button.
@@ -37,7 +34,8 @@ clock = pygame.time.Clock()
 x_coord = 10
 y_coord = 10
 
-maxi = 32767.0
+maxi = 32768.0
+lastmessage = '0'
  
 # Count the joysticks the computer has
 joystick_count = pygame.joystick.get_count()
@@ -68,15 +66,30 @@ while not done:
         jl01 = my_joystick.get_axis(1)
         jl10 = my_joystick.get_axis(2)
         jl11 = my_joystick.get_axis(3)
-        for i in range(0,16):
-          my_joystick.get_button(i)
- 
-	ref.jl00 = float(jl00)
-	ref.jl01 = float(jl01)
-	ref.jl10 = float(jl10)
-	ref.jl11 = float(jl11)
+        #for i in range(0,16):
+         # my_joystick.get_button(i)
+
+
+	if (jl01 < 0):
+		MESSAGE = 'F' + str(abs(jl01))
+	elif (jl01 > 0):
+		MESSAGE = 'B'+ str(abs(jl01))
+	elif (jl00 < 0):
+		MESSAGE = 'L'+ str(abs(jl00))
+	elif (jl00 > 0):
+		MESSAGE = 'R'+ str(abs(jl00))
+	elif (my_joystick.get_button(4) == 1):
+		MESSAGE = 'O'+ '1'
+	elif (my_joystick.get_button(6) == 1):
+		MESSAGE = 'C'+ '1'
+	else:
+		MESSAGE = 'S' 
 	
-	r.put(ref)
+	if (lastmessage != MESSAGE):
+		sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
+
+	lastmessage = MESSAGE
+
     # ALL GAME LOGIC SHOULD GO ABOVE THIS COMMENT
  
     clock.tick(60)
